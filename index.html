@@ -2,127 +2,305 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Infinitesol Onboarding</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Client Onboarding</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <!-- Added gradient hover style -->
+  <style>
+    button:hover {
+  background: radial-gradient(circle, #015961 0%, #00E8AD 100%);
+  color: white;
+  transition: background 0.3s ease;
+}
+  </style>
 </head>
 <body>
-  <header>
+  <div class="form-container">
     <img src="logo1.png" alt="Infinitesol Logo" class="logo" />
-    <h1>Client Onboarding Form</h1>
-  </header>
+    <h1 style="
+  text-align: center;">
+  Client Onboarding Form
+</h1>
+<form id="onboardingForm" onsubmit="submitForm(event)">
+      <!-- Step 1: Organization Details -->
+      <div class="form-step" id="step1">
+        <h2>Organization Details</h2>
+        <input type="text" placeholder="Organization Name" required />
+        <input type="text" placeholder="Primary Location Address" required />
 
-  <form id="onboardingForm">
-    <section class="form-section">
-      <h2>1. Organization Details</h2>
-      <div class="input-group">
-        <label>Organization Name:</label>
-        <input type="text" name="organizationName" required />
+        <label>Do you work in remote locations?
+          <select id="remoteSelect">
+            <option value="No">No</option>
+            <option value="Yes">Yes</option>
+          </select>
+        </label>
+
+        <textarea id="remote1" placeholder="Remote Location Address #1" style="display:none;"></textarea>
+
+        <label id="moreRemoteLabel2" style="display:none;">Do you want to add more remote locations (2)?
+          <select id="remoteMore2">
+            <option value="No">No</option>
+            <option value="Yes">Yes</option>
+          </select>
+        </label>
+
+        <textarea id="remote2" placeholder="Remote Location Address #2" style="display:none;"></textarea>
+
+        <label id="moreRemoteLabel3" style="display:none;">Do you want to add more remote locations (3)?
+          <select id="remoteMore3">
+            <option value="No">No</option>
+            <option value="Yes">Yes</option>
+          </select>
+        </label>
+
+        <textarea id="remote3" placeholder="Remote Location Address #3" style="display:none;"></textarea>
+
+        <input type="email" placeholder="Organization Email" required />
+        <input type="tel" placeholder="Organization Phone" pattern="\+\d{2} \d{10}" required />
+        <input type="url" placeholder="Organization Website" required />
+        <input type="text" placeholder="CRM Details" />
+        <input type="number" id="employeeCount" placeholder="Number of Employees" required />
+        <input type="text" placeholder="Domain Details" />
+        <input type="text" placeholder="Domain Maintained By" />
+        <input type="text" placeholder="IT Contact Person Name" />
+        <input type="tel" placeholder="IT Contact Phone Number" pattern="\+\d{2} \d{10}" />
+        <input type="email" placeholder="IT Contact Email" />
+        <button type="button" onclick="generateEmployeeFields(); nextStep(2)">Next</button>
+        <button type="reset">Clear</button>
       </div>
 
-      <div class="input-group">
-        <label>Primary Location Address:</label>
-        <textarea name="primaryAddress" required></textarea>
+      <!-- Step 2: Employee Contact Details -->
+      <div class="form-step" id="step2" style="display:none;">
+        <h2>Employee Contact Details</h2>
+        <div id="employeeSection"></div>
+        <button type="button" onclick="nextStep(1)">Back</button>
+        <button type="button" onclick="populateEmployeeDropdown(); nextStep(3)">Next</button>
       </div>
 
-      <div class="input-group">
-        <label>Do you work in remote locations?</label>
-        <select id="hasRemote" name="hasRemote">
-          <option value="No">No</option>
-          <option value="Yes">Yes</option>
-        </select>
+      <!-- Step 3: Asset Details -->
+      <div class="form-step" id="step3" style="display:none;">
+        <h2>Asset Details</h2>
+        <label>Device Type
+          <select id="deviceType" onchange="toggleAssetFields()">
+            <option>--Select--</option>
+            <option>Anti-Virus</option>
+            <option>Others</option>
+            <option>Wifi</option>
+            <option>Website</option>
+            <option>Telephone</option>
+            <option>Tablet</option>
+            <option>Switch</option>
+            <option>Smartphone</option>
+            <option>Router</option>
+            <option>Peripherals</option>
+            <option>Workstation</option>
+            <option>UPS</option>
+            <option>SSL Certificates</option>
+            <option>Server</option>
+            <option>Printer</option>
+            <option>Networking</option>
+            <option>Laptop</option>
+            <option>Firewall</option>
+            <option>Domain</option>
+            <option>Desktop</option>
+          </select>
+        </label>
+        <input type="text" placeholder="Name of Device" />
+        <input type="text" placeholder="Serial Number / Product ID" />
+        <input type="text" placeholder="Manufacturer" />
+        <input type="text" placeholder="Model" />
+
+        <div id="contactFields" style="display:none;">
+          <label>Contact
+            <select id="employeeDropdown"></select>
+          </label>
+        </div>
+
+        <label>Location
+          <select>
+            <option>Primary Location</option>
+            <option>Remote Location #1</option>
+            <option>Remote Location #2</option>
+          </select>
+        </label>
+
+        <div id="osField" style="display:none;">
+          <label>Operating System
+            <select>
+              <option value="Windows">Windows</option>
+              <option value="Linux">Linux</option>
+              <option value="MacOS">MacOS</option>
+              <option value="Android">Android</option>
+              <option value="Other">Other</option>
+            </select>
+          </label>
+        </div>
+
+        <input id="ipField" type="text" placeholder="Internal IP Address" style="display:none;" />
+        <input id="macField" type="text" placeholder="MAC Address" style="display:none;" />
+        <button type="button" onclick="nextStep(2)">Back</button>
+        <button type="button" onclick="nextStep(4)">Next</button>
       </div>
 
-      <div class="input-group hidden" id="remote1">
-        <label>Remote Location Address #1:</label>
-        <textarea name="remoteAddress1"></textarea>
-        <label>Do you want to add more remote locations?</label>
-        <select id="moreRemote1">
-          <option value="No">No</option>
-          <option value="Yes">Yes</option>
-        </select>
+      <!-- Step 4: Consent & Submit -->
+      <div class="form-step" id="step4" style="display:none;">
+        <h2>Consent and Submit</h2>
+        <label><input type="checkbox" required /> I confirm all information is accurate and agree to the terms.</label>
+        <div class="g-recaptcha" data-sitekey="your_site_key"></div>
+        <button type="button" onclick="nextStep(3)">Back</button>
+        <button type="submit">Submit</button>
       </div>
+    </form>
+  </div>
 
-      <div class="input-group hidden" id="remote2">
-        <label>Remote Location Address #2:</label>
-        <textarea name="remoteAddress2"></textarea>
-        <label>Do you want to add more remote locations?</label>
-        <select id="moreRemote2">
-          <option value="No">No</option>
-          <option value="Yes">Yes</option>
-        </select>
-      </div>
+  <script>
+    function nextStep(step) {
+      document.querySelectorAll('.form-step').forEach(e => e.style.display = 'none');
+      document.getElementById('step' + step).style.display = 'block';
+    }
 
-      <div class="input-group hidden" id="remote3">
-        <label>Remote Location Address #3:</label>
-        <textarea name="remoteAddress3"></textarea>
-      </div>
+    document.getElementById('remoteSelect').addEventListener('change', function () {
+      const show = this.value === 'Yes';
+      document.getElementById('remote1').style.display = show ? 'block' : 'none';
+      document.getElementById('moreRemoteLabel2').style.display = show ? 'block' : 'none';
+    });
 
-      <div class="input-group">
-        <label>Organization Email:</label>
-        <input type="email" name="orgEmail" required />
-      </div>
+    document.getElementById('remoteMore2').addEventListener('change', function () {
+      const show = this.value === 'Yes';
+      document.getElementById('remote2').style.display = show ? 'block' : 'none';
+      document.getElementById('moreRemoteLabel3').style.display = show ? 'block' : 'none';
+    });
 
-      <div class="input-group">
-        <label>Organization Phone:</label>
-        <input type="tel" name="orgPhone" pattern="\+\d{2} \d{10}" required />
-      </div>
+    document.getElementById('remoteMore3').addEventListener('change', function () {
+      const show = this.value === 'Yes';
+      document.getElementById('remote3').style.display = show ? 'block' : 'none';
+    });
 
-      <div class="input-group">
-        <label>Organization Website:</label>
-        <input type="url" name="orgWebsite" required />
-      </div>
+    function toggleAssetFields() {
+      const type = document.getElementById('deviceType').value;
+      const contactDevices = ['Laptop', 'Desktop', 'Smartphone', 'Tablet', 'Server'];
+      const networkDevices = ['Router', 'Switch', 'Firewall', 'Networking', 'Wifi'];
+      document.getElementById('contactFields').style.display = contactDevices.includes(type) ? 'block' : 'none';
+      document.getElementById('osField').style.display = contactDevices.includes(type) ? 'block' : 'none';
+      document.getElementById('ipField').style.display = networkDevices.includes(type) ? 'block' : 'none';
+      document.getElementById('macField').style.display = networkDevices.includes(type) ? 'block' : 'none';
+    }
 
-      <div class="input-group">
-        <label>CRM Details:</label>
-        <input type="text" name="crmDetails" />
-      </div>
+    function generateEmployeeFields() {
+      const count = parseInt(document.getElementById('employeeCount').value, 10);
+      const section = document.getElementById('employeeSection');
+      section.innerHTML = '';
 
-      <div class="input-group">
-        <label>Number of Employees:</label>
-        <input type="number" id="employeeCount" name="employeeCount" min="1" required />
-      </div>
+      const locations = ['Primary Location'];
+      if (document.getElementById('remote1').style.display === 'block') locations.push('Remote Location #1');
+      if (document.getElementById('remote2').style.display === 'block') locations.push('Remote Location #2');
+      if (document.getElementById('remote3').style.display === 'block') locations.push('Remote Location #3');
 
-      <div class="input-group">
-        <label>Domain Details:</label>
-        <input type="text" name="domainDetails" />
-      </div>
+      for (let i = 0; i < count; i++) {
+        const empNum = i + 1;
 
-      <div class="input-group">
-        <label>Domain Maintained By:</label>
-        <input type="text" name="domainMaintainer" />
-      </div>
+        let locationOptions = '';
+        locations.forEach(loc => {
+          locationOptions += `<option value="${loc}">${loc}</option>`;
+        });
 
-      <div class="input-group">
-        <label>Contact Person Name (IT Department):</label>
-        <input type="text" name="itContactName" />
-      </div>
+        section.innerHTML += `
+          <div class="employee-block">
+            <h3>Employee #${empNum}</h3>
+            <input type="text" class="firstName" placeholder="First Name" required />
+            <input type="text" class="lastName" placeholder="Last Name" required />
+            <input type="email" placeholder="Organizational Email (optional)" />
+            <input type="email" class="personalEmail" placeholder="Personal Email" required />
+            <input type="tel" placeholder="Mobile Number (+xx xxxxxxxxxx)" pattern="\\+\\d{2} \\d{10}" required />
+            <input type="text" placeholder="Position" />
+            <label>Status
+              <select>
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </label>
+            <label>Location
+              <select>
+                ${locationOptions}
+              </select>
+            </label>
+          </div>
+        `;
+      }
+    }
 
-      <div class="input-group">
-        <label>Phone Number:</label>
-        <input type="tel" name="itContactPhone" pattern="\+\d{2} \d{10}" />
-      </div>
-
-      <div class="input-group">
-        <label>Email:</label>
-        <input type="email" name="itContactEmail" />
-      </div>
-    </section>
-
-    <section class="form-section">
-      <h2>2. Employee Contact Details</h2>
-      <div id="employeeContainer"></div>
-    </section>
-
-    <section class="form-section">
-      <h2>3. Asset Details</h2>
-      <div id="assetContainer"></div>
-      <button type="button" id="addAssetBtn">Add Another Asset</button>
-    </section>
-
-    <button type="submit" class="submit-btn">Submit</button>
-  </form>
-
+    function populateEmployeeDropdown() {
+      const dropdown = document.getElementById('employeeDropdown');
+      dropdown.innerHTML = '';
+      const employees = document.querySelectorAll('.employee-block');
+      employees.forEach(emp => {
+        const first = emp.querySelector('.firstName').value;
+        const last = emp.querySelector('.lastName').value;
+        const option = document.createElement('option');
+        option.textContent = `${first} ${last}`;
+        dropdown.appendChild(option);
+      });
+    }
+  </script>
   <script src="script.js"></script>
+  <script>
+    function submitForm(e) {
+      e.preventDefault();
+  
+      // Basic form data collection
+      const form = document.getElementById('onboardingForm');
+      const data = {
+        orgName: form[0].value,
+        primaryLocation: form[1].value,
+        remote1: document.getElementById('remote1').value,
+        remote2: document.getElementById('remote2').value,
+        remote3: document.getElementById('remote3').value,
+        email: form[7].value,
+        phone: form[8].value,
+        website: form[9].value,
+        crm: form[10].value,
+        employeeCount: form[11].value,
+        domain: form[12].value,
+        domainMaintainedBy: form[13].value,
+        itContactName: form[14].value,
+        itContactPhone: form[15].value,
+        itContactEmail: form[16].value,
+        employees: [],
+        assets: [] // Optional: populate from step3 if needed
+      };
+  
+      document.querySelectorAll('.employee-block').forEach(emp => {
+        data.employees.push({
+          firstName: emp.querySelector('.firstName').value,
+          lastName: emp.querySelector('.lastName').value,
+          personalEmail: emp.querySelector('.personalEmail').value,
+          mobile: emp.querySelector('input[type="tel"]').value,
+          position: emp.querySelector('input[placeholder="Position"]').value,
+          status: emp.querySelector('select').value,
+          location: emp.querySelectorAll('select')[1].value
+        });
+      });
+  
+      fetch('https://script.google.com/macros/s/AKfycbyayYiANz1lVB1KPx4wHAtwZ--rYgJWkloi2haXHCfILEOSubziddi4JaT35KDpnH6g/exec', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(res => res.text())
+      .then(msg => {
+        alert('Form submitted successfully!');
+        form.reset();
+        nextStep(1); // Reset to Step 1
+      })
+      .catch(err => {
+        console.error('Submission error:', err);
+        alert('Failed to submit form.');
+      });
+    }
+  </script>
+  
 </body>
 </html>
