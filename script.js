@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const json = {};
     for (const [key, val] of formData.entries()) json[key] = val;
     try {
-      const res = await fetch('https://sheetdb.io/api/v1/YOUR_API_KEY', {
+      const res = await fetch('https://sheetdb.io/api/v1/fazt7wz3cci82', {
         method: 'POST',
         body: JSON.stringify({ data: json }),
         headers: { 'Content-Type': 'application/json' }
