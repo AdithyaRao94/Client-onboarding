@@ -1,8 +1,10 @@
+/* style.css */
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(to bottom right, #170646, #1846E9, #00E8AD);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #170646, #1846E9, #00E8AD);
   color: #fff;
+  min-height: 100vh;
 }
 
 header {
@@ -12,42 +14,67 @@ header {
 }
 
 header img {
-  max-height: 80px;
-  display: block;
-  margin: 0 auto 10px;
+  height: 60px;
+  margin-bottom: 10px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 24px;
+  color: #fff;
 }
 
 .container {
-  padding: 30px;
-  max-width: 800px;
-  margin: auto;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
+  max-width: 900px;
+  margin: 30px auto;
+  background: #ffffff15;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
 }
 
-form h2 {
-  margin-top: 30px;
-  color: #00E8AD;
+form section {
+  margin-bottom: 30px;
 }
 
-input, select, button {
-  display: block;
+h2 {
+  color: #ffffff;
+  border-bottom: 2px solid #00E8AD;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+input, select, textarea {
   width: 100%;
-  margin: 10px 0;
   padding: 12px;
-  font-size: 16px;
-  border-radius: 5px;
+  margin-bottom: 15px;
   border: none;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #333;
+  font-size: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: 0.3s;
 }
 
-button {
-  background-color: #00E8AD;
-  color: #000;
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  box-shadow: 0 0 5px #00E8AD;
+}
+
+button[type="submit"] {
+  background: #00E8AD;
+  border: none;
+  padding: 14px 28px;
+  font-size: 16px;
+  border-radius: 8px;
+  color: #170646;
   font-weight: bold;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: 0.3s;
+  margin-top: 10px;
 }
 
-button:hover {
-  background-color: #00c299;
+button[type="submit"]:hover {
+  background: #00caa1;
 }
