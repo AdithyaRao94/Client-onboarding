@@ -1,61 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Infinitesol Onboarding Form</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Onboarding - Infinitesol</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
-  <header>
-    <img src="Logo original_png.png" alt="Infinitesol Logo" />
-    <h1>Client Onboarding Form</h1>
+  <header class="header">
+    <img src="Logo original_png.png" alt="Infinitesol Logo" class="logo">
+    <h1>Client Onboarding</h1>
   </header>
 
-  <div class="container">
+  <main class="form-container">
     <form id="onboardingForm">
-      <h2>Organization Details</h2>
-      <input type="text" name="organization_name" placeholder="Organization Name" required />
-      <input type="text" name="hq_address" placeholder="Headquarters Address" required />
-      <input type="email" name="organization_email" placeholder="Organization Email" required />
-      <input type="tel" name="phone" placeholder="Phone (+xx xxxxxxxxxx)" required />
-      <input type="url" name="website" placeholder="Organization Website" required />
-      <input type="text" name="crm" placeholder="CRM Details" />
+      <!-- Section 1: Organization Details -->
+      <section class="form-section">
+        <h2>Organization Details</h2>
+        <div class="form-grid">
+          <input type="text" name="orgName" placeholder="Organization Name" required>
+          <input type="text" name="hqAddress" placeholder="Headquarters Address" required>
 
-      <h2>Employee Contact Details</h2>
-      <input type="text" name="employee_first_name" placeholder="First Name" required />
-      <input type="text" name="employee_last_name" placeholder="Last Name" required />
-      <input type="email" name="employee_email" placeholder="Organizational Email" />
-      <input type="email" name="employee_personal_email" placeholder="Personal Email" required />
-      <input type="tel" name="employee_phone" placeholder="Mobile Number" required />
-      <input type="text" name="employee_position" placeholder="Position" />
-      <select name="employee_status">
-        <option value="Active">Active</option>
-        <option value="Inactive">Inactive</option>
-      </select>
+          <label>Do you work in remote locations?
+            <select name="remoteWork" id="remoteWork">
+              <option value="No">No</option>
+              <option value="Yes">Yes</option>
+            </select>
+          </label>
 
-      <h2>Asset Details</h2>
-      <select name="device_type">
-        <option value="Laptop">Laptop</option>
-        <option value="Desktop">Desktop</option>
-        <option value="Smartphone">Smartphone</option>
-        <option value="Tablet">Tablet</option>
-        <option value="Server">Server</option>
-        <option value="Networking">Networking</option>
-      </select>
-      <input type="text" name="device_name" placeholder="Device Name" required />
-      <input type="text" name="serial_number" placeholder="Serial Number or Product ID" />
-      <input type="text" name="manufacturer" placeholder="Manufacturer" />
-      <input type="text" name="model" placeholder="Model" />
-      <input type="text" name="assigned_to" placeholder="Assigned To" />
-      <input type="email" name="asset_contact_email" placeholder="Contact Email" />
-      <input type="text" name="asset_location" placeholder="Location" />
-      <input type="text" name="os" placeholder="Operating System" />
+          <div id="remoteLocations"></div>
 
-      <button type="submit">Submit</button>
+          <input type="email" name="orgEmail" placeholder="Organization Email" required>
+          <input type="tel" name="orgPhone" placeholder="+xx xxxxxxxxxx" required>
+          <input type="url" name="orgWebsite" placeholder="Website URL">
+          <input type="text" name="crmDetails" placeholder="CRM Details">
+          <input type="number" name="employeeCount" id="employeeCount" placeholder="Number of Employees" required>
+          <input type="text" name="domainDetails" placeholder="Domain Details">
+          <input type="text" name="domainMaintainedBy" placeholder="Domain Maintained By">
+          <input type="text" name="itContactName" placeholder="IT Contact Name">
+          <input type="tel" name="itContactPhone" placeholder="+xx xxxxxxxxxx">
+          <input type="email" name="itContactEmail" placeholder="IT Contact Email">
+        </div>
+      </section>
+
+      <!-- Section 2: Employee Details -->
+      <section class="form-section">
+        <h2>Employee Contact Details</h2>
+        <div id="employeeDetailsContainer"></div>
+      </section>
+
+      <!-- Section 3: Asset Details -->
+      <section class="form-section">
+        <h2>Asset Details</h2>
+        <div id="assetDetailsContainer"></div>
+      </section>
+
+      <div class="form-footer">
+        <button type="button" onclick="generateFields()">Generate Dynamic Fields</button>
+        <button type="submit">Submit</button>
+      </div>
     </form>
-  </div>
-
-  <script src="script.js"></script>
+  </main>
 </body>
+
 </html>
