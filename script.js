@@ -10,7 +10,7 @@ document.getElementById("onboardingForm").addEventListener("submit", async funct
   });
 
   try {
-    const response = await fetch("https://sheetdb.io/api/v1/YOUR_API_ENDPOINT", {
+    const response = await fetch("https://sheetdb.io/api/v1/fazt7wz3cci82", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
