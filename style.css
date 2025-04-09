@@ -1,105 +1,53 @@
-
-/* Background Gradient */
 body {
   margin: 0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #170646, #1846E9, #00E8AD);
-  background-size: 400% 400%;
-  animation: gradientMove 15s ease infinite;
-  min-height: 100vh;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 40px 20px;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom right, #170646, #1846E9, #00E8AD);
+  color: #fff;
 }
 
-@keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* Form Container */
-.form-container {
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 40px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  width: 100%;
-  max-width: 1000px;
-}
-
-/* Logo */
-.logo {
-  display: block;
-  margin: 0 auto 20px auto;
-  max-width: 220px;
-}
-
-/* Headings */
-h1 {
-  text-align: center;
-  color: #170646;
-  font-size: 28px;
-  margin-bottom: 30px;
-}
-
-h2 {
-  margin-top: 40px;
-  margin-bottom: 15px;
-  color: #170646;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 6px;
-}
-
-/* Inputs */
-input,
-select,
-textarea {
-  width: 100%;
-  padding: 12px 14px;
-  margin: 8px 0;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  font-size: 15px;
-}
-
-/* Button Styling */
-button {
+header {
   background-color: #170646;
-  color: white;
-  font-weight: 600;
-  padding: 12px 20px;
-  margin-top: 12px;
-  border: none;
+  padding: 20px;
+  text-align: center;
+}
+
+header img {
+  max-height: 80px;
+  display: block;
+  margin: 0 auto 10px;
+}
+
+.container {
+  padding: 30px;
+  max-width: 800px;
+  margin: auto;
+  background: rgba(0, 0, 0, 0.3);
   border-radius: 10px;
+}
+
+form h2 {
+  margin-top: 30px;
+  color: #00E8AD;
+}
+
+input, select, button {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: none;
+}
+
+button {
+  background-color: #00E8AD;
+  color: #000;
+  font-weight: bold;
   cursor: pointer;
-  transition: 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #0f0332;
-}
-
-/* Layout Fixes */
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-}
-
-.row > div {
-  flex: 1 1 calc(33.333% - 10px);
-  min-width: 240px;
-}
-
-/* Responsive Fix */
-@media (max-width: 768px) {
-  .row > div {
-    flex: 1 1 100%;
-  }
-}
-
-.hidden {
-  display: none;
+  background-color: #00c299;
 }
