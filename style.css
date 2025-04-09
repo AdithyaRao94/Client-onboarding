@@ -1,4 +1,4 @@
-/* style.css */
+/* ===================== styles.css ===================== */
 body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -9,72 +9,151 @@ body {
 
 header {
   background-color: #170646;
+  color: #fff;
   padding: 20px;
   text-align: center;
-}
-
-header img {
-  height: 60px;
-  margin-bottom: 10px;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 24px;
-  color: #fff;
+  font-size: 1.8rem;
+  font-weight: bold;
+  border-bottom: 4px solid #00E8AD;
 }
 
 .container {
-  max-width: 900px;
+  max-width: 1000px;
   margin: 30px auto;
-  background: #ffffff15;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  padding: 30px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
-form section {
-  margin-bottom: 30px;
-}
-
-h2 {
-  color: #ffffff;
+form h2 {
+  margin-bottom: 10px;
+  color: #00E8AD;
   border-bottom: 2px solid #00E8AD;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
+  padding-bottom: 5px;
 }
 
-input, select, textarea {
+label {
+  display: block;
+  margin-top: 20px;
+  font-weight: 600;
+  color: #fff;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+select {
   width: 100%;
   padding: 12px;
-  margin-bottom: 15px;
-  border: none;
+  margin-top: 8px;
   border-radius: 8px;
-  background: #ffffff;
+  border: none;
+  background-color: #fff;
   color: #333;
-  font-size: 15px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  transition: 0.3s;
+  font-size: 1rem;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-input:focus, select:focus, textarea:focus {
+input:focus, select:focus {
   outline: none;
-  box-shadow: 0 0 5px #00E8AD;
+  border: 2px solid #00E8AD;
 }
 
-button[type="submit"] {
-  background: #00E8AD;
-  border: none;
-  padding: 14px 28px;
-  font-size: 16px;
-  border-radius: 8px;
+button {
+  background-color: #00E8AD;
   color: #170646;
+  border: none;
+  padding: 12px 25px;
+  margin-top: 20px;
+  border-radius: 8px;
+  font-size: 1rem;
   font-weight: bold;
   cursor: pointer;
-  transition: 0.3s;
-  margin-top: 10px;
+  transition: background 0.3s ease;
 }
 
-button[type="submit"]:hover {
-  background: #00caa1;
+button:hover {
+  background-color: #00c79b;
 }
+
+.dynamic-section {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+}
+
+/* ===================== script.js ===================== */
+document.addEventListener('DOMContentLoaded', () => {
+  const remoteToggle = document.getElementById('remote-toggle');
+  const remoteContainer = document.getElementById('remote-container');
+
+  remoteToggle.addEventListener('change', () => {
+    remoteContainer.style.display = remoteToggle.value === 'Yes' ? 'block' : 'none';
+  });
+
+  // Add more remote locations logic
+  document.getElementById('add-remote').addEventListener('click', () => {
+    const count = remoteContainer.querySelectorAll('.remote-location').length + 1;
+    const div = document.createElement('div');
+    div.classList.add('remote-location');
+    div.innerHTML = `
+      <label>Remote Location Address #${count}</label>
+      <input type="text" name="remote_location_${count}" required>
+    `;
+    remoteContainer.appendChild(div);
+  });
+
+  // Handle employee count logic
+  document.getElementById('employee-count').addEventListener('change', (e) => {
+    const count = parseInt(e.target.value);
+    const container = document.getElementById('employee-container');
+    container.innerHTML = '';
+    for (let i = 1; i <= count; i++) {
+      const div = document.createElement('div');
+      div.classList.add('dynamic-section');
+      div.innerHTML = `
+        <h3>Employee ${i}</h3>
+        <label>First Name</label><input type="text" name="first_name_${i}" required>
+        <label>Last Name</label><input type="text" name="last_name_${i}" required>
+        <label>Organizational Email</label><input type="email" name="org_email_${i}">
+        <label>Personal Email</label><input type="email" name="personal_email_${i}" required>
+        <label>Mobile Number</label><input type="tel" name="mobile_${i}" placeholder="+xx xxxxxxxxxx">
+        <label>Position</label><input type="text" name="position_${i}">
+        <label>Status</label>
+        <select name="status_${i}">
+          <option value="Active">Active</option>
+          <option value="Inactive">Inactive</option>
+        </select>
+        <label>Location</label><select name="location_${i}"><option value="Headquarters">Headquarters</option></select>
+      `;
+      container.appendChild(div);
+    }
+  });
+
+  // Form submission logic
+  document.getElementById('onboarding-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      const res = await fetch('https://sheetdb.io/api/v1/YOUR_SHEETDB_API_KEY', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data })
+      });
+      if (res.ok) {
+        alert('Form submitted successfully!');
+        e.target.reset();
+      } else {
+        alert('Something went wrong. Please try again.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Failed to connect to the API.');
+    }
+  });
+});
